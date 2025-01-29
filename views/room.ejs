@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room <%= room.code %> • Secure Share</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="room-header">
+        <div class="header-content">
+            <div class="room-meta">
+                <h1 class="room-code"><%= room.code %></h1>
+                <div class="room-stats">
+                    <span class="stat-item">
+                        <i class="fas fa-file"></i> <%= room.files.length %> files
+                    </span>
+                    <span class="stat-item">
+                        <i class="fas fa-clock"></i> Expires in 7 days
+                    </span>
+                </div>
+            </div>
+            
+            <div class="share-controls">
+                <div class="copy-section">
+                    <input type="text" value="<%= room.code %>" id="roomCode" readonly>
+                    <button class="copy-button" onclick="copyCode()">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                
+                <div class="social-share">
+                    <a href="https://wa.me/?text=Access%20my%20files:%20<%= shareUrl %>" 
+                       class="social-icon whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="mailto:?subject=Secure%20Files&body=Access%20my%20files:%20<%= shareUrl %>" 
+                       class="social-icon email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://t.me/share/url?url=<%= shareUrl %>&text=Access%20my%20files" 
+                       class="social-icon telegram" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="file-list-container">
+        <div class="container">
+            <% room.files.forEach(file => { %>
+                <div class="file-card">
+                    <div class="file-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="file-details">
+                        <h3 class="file-name"><%= file.filename %></h3>
+                        <div class="file-meta">
+                            <span class="file-size"><%= (file.size/1024/1024).toFixed(2) %> MB</span>
+                            <span class="file-type"><%= file.mimetype %></span>
+                        </div>
+                    </div>
+                    <a href="/download/<%= file._id %>" class="download-button">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <script>
+        function copyCode() {
+            const codeInput = document.getElementById('roomCode');
+            navigator.clipboard.writeText(codeInput.value);
+            
+            const copyBtn = document.querySelector('.copy-button');
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

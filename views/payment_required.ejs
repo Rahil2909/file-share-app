@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Premium Required</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-card">
+            <div class="payment-header">
+                <i class="fas fa-lock fa-3x"></i>
+                <h1>Premium Access Required</h1>
+            </div>
+            
+            <div class="payment-content">
+                <p class="payment-text">
+                    You're trying to upload <span class="highlight"><%= fileCount %> files</span>.<br>
+                    Free tier allows maximum <%= maxFreeFiles %> files.
+                </p>
+                
+                <div class="pricing-box">
+                    <div class="price-tag">
+                        <span class="currency">₹</span>
+                        <span class="amount"><%= requiredAmount %></span>
+                    </div>
+                    <p class="price-text">One-time payment for unlimited access</p>
+                </div>
+
+                <button class="payment-button">
+                    <i class="fas fa-unlock"></i> Unlock Premium Access
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
